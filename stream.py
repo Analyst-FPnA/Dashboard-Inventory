@@ -31,26 +31,26 @@ if not os.path.exists('full_4401.csv'):
             if file_name.endswith('.xlsx') or file_name.endswith('.xls'):  # Memastikan hanya file Excel yang dibaca
                 with z.open(file_name) as f:
                     # Membaca file Excel ke dalam DataFrame
-            df_4101 =   pd.read_excel(f, header=4)
-            df_4101['Nama Cabang'] = df_4101['Nama Cabang'].astype(str)
-            
-            data_remove = ["Nama Cabang", "GiS", "#41.01", "Dari", "Cabang"]
-            df_4101a = df_4101[~df_4101['Nama Cabang'].str.startswith(tuple(data_remove))]
-            
-            df_4101a['Nama Cabang'] = df_4101a['Nama Cabang'].replace('nan', "")
-            
-            df_4101a['Keterangan'] = df_4101a['Keterangan'].fillna("").astype(str)
-            
-            df_4101a['Keterangan'] = df_4101a.groupby((df_4101a['Nomor #'].notna()).cumsum())['Keterangan'].transform(lambda x: ' '.join(x))
-            
-            df_4101a = df_4101a.loc[:, ~df_4101.columns.str.startswith('Unnamed')]
-            
-            df_4101a = df_4101a[df_4101a['Nama Cabang'] != ""]
-            
-            df_4101a['Tanggal'] = pd.to_datetime(df_4101a['Tanggal'], format='%d/%m/%Y %H:%M:%S')
-            
-            df_4101a['Tanggal'] = df_4101a['Tanggal'].dt.strftime('%d/%m/%Y')
-            concatenated_df.append(df_4101a) 
+                    df_4101 =   pd.read_excel(f, header=4)
+                    df_4101['Nama Cabang'] = df_4101['Nama Cabang'].astype(str)
+                    
+                    data_remove = ["Nama Cabang", "GiS", "#41.01", "Dari", "Cabang"]
+                    df_4101a = df_4101[~df_4101['Nama Cabang'].str.startswith(tuple(data_remove))]
+                    
+                    df_4101a['Nama Cabang'] = df_4101a['Nama Cabang'].replace('nan', "")
+                    
+                    df_4101a['Keterangan'] = df_4101a['Keterangan'].fillna("").astype(str)
+                    
+                    df_4101a['Keterangan'] = df_4101a.groupby((df_4101a['Nomor #'].notna()).cumsum())['Keterangan'].transform(lambda x: ' '.join(x))
+                    
+                    df_4101a = df_4101a.loc[:, ~df_4101.columns.str.startswith('Unnamed')]
+                    
+                    df_4101a = df_4101a[df_4101a['Nama Cabang'] != ""]
+                    
+                    df_4101a['Tanggal'] = pd.to_datetime(df_4101a['Tanggal'], format='%d/%m/%Y %H:%M:%S')
+                    
+                    df_4101a['Tanggal'] = df_4101a['Tanggal'].dt.strftime('%d/%m/%Y')
+                    concatenated_df.append(df_4101a) 
         pd.concat(concatenated_df, ignore_index=True).to_csv('full_4401.csv',ignore_index=True)
 
 if 'df_4401' not in locals():
