@@ -29,6 +29,7 @@ if not os.path.exists('full_4401.csv'):
         concatenated_df= []
         for file_name in z.namelist():
             if file_name.endswith('.xlsx') or file_name.endswith('.xls'):  # Memastikan hanya file Excel yang dibaca
+                print(file_name)
                 with z.open(file_name) as f:
                     # Membaca file Excel ke dalam DataFrame
                     df_4101 =   pd.read_excel(f, header=4)
