@@ -100,7 +100,7 @@ df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_n
 #df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].applymap(lambda x: '' if x=='' else f'{x:.0f}')
 total = pd.DataFrame((df_4101_1.iloc[:,1:].sum(axis=0).values).reshape(1,len(df_4101_1.columns)-1),columns=df_4101_1.columns[1:])
 total['Nama Barang']='TOTAL'
-
+df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].astype(int)
 pd.options.display.float_format = '{:,.0f}'.format
 df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[['Kuantitas','Total Biaya']].sum().reset_index()
 df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns=['Tipe Penyesuaian'],values=['Kuantitas','Total Biaya']).reset_index().fillna(0)
