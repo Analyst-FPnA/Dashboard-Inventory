@@ -52,7 +52,7 @@ st.title('Dashboard - Inventaris')
 df_4101 = df_4101[~df_4101['Kode Barang'].astype(str).str.startswith('1')]
 col = st.columns(3)
 with col[0]:
-    cabang = st.selectbox("NAMA CABANG:", ['All'] + sorted(df_4101['Nama Cabang'].unique().tolist()), index=0, on_change=reset_button_state)
+    cabang = st.selectbox("NAMA CABANG:", sorted(df_4101['Nama Cabang'].unique().tolist()), index=0, on_change=reset_button_state)
 with col[1]:
     tipe = st.selectbox("PENAMBAHAN/PENGURANGAN:", ['Penambahan','Pengurangan'], index=0, on_change=reset_button_state)
 with col[2]:
@@ -65,8 +65,7 @@ list_bulan = [
 
 
 
-if cabang != 'All':
-    df_4101 = df_4101[(df_4101['Nama Cabang']==cabang) & (df_4101['Kategori'].isin(['00.COST', '21.COST.ASSET', '20.ASSET.ASSET']))]
+df_4101 = df_4101[(df_4101['Nama Cabang']==cabang) & (df_4101['Kategori'].isin(['00.COST', '21.COST.ASSET', '20.ASSET.ASSET']))]
 df_4101['Tanggal'] = pd.to_datetime(df_4101['Tanggal'], format="%d/%m/%Y")
 df_4101['Month'] = df_4101['Tanggal'].dt.month_name()
 df_4101_1 = df_4101[df_4101['Tipe Penyesuaian']== tipe]
