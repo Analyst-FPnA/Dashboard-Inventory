@@ -95,7 +95,7 @@ df_4101_1= df_4101_1.groupby(['Month','Nama Barang'])[[f'{qty_nom}']].sum().rese
 
 df_4101_1['Month'] = pd.Categorical(df_4101_1['Month'], categories=list_bulan, ordered=True)
 df_4101_1 = df_4101_1.sort_values('Month')
-df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_nom}').reset_index().fillna('')
+df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_nom}').reset_index().fillna('')
 
 df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[[f'{qty_nom}']].sum().reset_index()
 df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns='Tipe Penyesuaian',values=f'{qty_nom}').reset_index().fillna('')
