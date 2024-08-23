@@ -56,23 +56,42 @@ if not os.path.exists('full_4401.csv'):
 
 if 'df_4401' not in locals():
     df_4401 = pd.read_csv('full_4401.csv')
-  
+    
+st.title('Dashboard - Inventaris')  
+
+df_4101_1 = df_4401[~df_4401['Kode Barang'].astype(str).str.startswith('1')]
+col = st.columns(3)
+with col[0]:
+    gudang = st.selectbox("NAMA GUDANG:", ['All'] + sorted(df_4401['Nama Gudang'].unique().tolist()), index=0, on_change=reset_button_state)
+with col[1]:
+    tipe = st.selectbox("PENAMBAHAN/PENGURANGAN:", ['All','Penambahan','Pengurangan'], index=0, on_change=reset_button_state)
+with col[2]:
+    qty_nom = st.selectbox("KUANTITAS/TOTAL BIAYA:", ['Kuantitas','Total Biaya'], index=0, on_change=reset_button_state)
+
 list_bulan = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December']
 
-df_4101_1 = df_4401[~df_4401['Kode Barang'].astype(str).str.startswith('1')]
-df_4101_1['Tanggal'] = pd.to_datetime(df_4101_1['Tanggal'], format="%d/%m/%Y")
-df_4101_1['Month'] = df_4101_1['Tanggal'].dt.month_name()
-df_4101_1 = df_4101_1.groupby(['Month','Nama Barang'])[['Kuantitas']].sum().reset_index()
+
+df_4101 = df_4401[~df_4401['Kode Barang'].str.startswith('1')]
+
+if gudang != 'All':
+    df_4101 = df_4101[df_4101['Nama Gudang']== gudang]
+df_4101['Tanggal'] = pd.to_datetime(df_4101['Tanggal'], format="%d/%m/%Y")
+df_4101['Month'] = df_4101['Tanggal'].dt.month_name()
+
+if tipe != 'All':
+    df_4101_1 = df_4101[df_4101['Tipe Penyesuaian']== tipe]
+if tipe == 'All':
+    df_4101_1 = df_4101
+df_4101_1= df_4101_1.groupby(['Month','Nama Barang'])[[f'{qty_nom}']].sum().reset_index()
+
 df_4101_1['Month'] = pd.Categorical(df_4101_1['Month'], categories=list_bulan, ordered=True)
 df_4101_1 = df_4101_1.sort_values('Month')
-df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values='Kuantitas').reset_index().fillna('')
-st.dataframe(df_4101_1, use_container_width=True, hide_index=True)
+df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_nom}').reset_index().fillna('')
 
-df_4101_2 = df_4401[~df_4401['Kode Barang'].astype(str).str.startswith('1')]
-df_4101_2['Tanggal'] = pd.to_datetime(df_4101_2['Tanggal'], format="%d/%m/%Y")
-df_4101_2['Month'] = df_4101_2['Tanggal'].dt.month_name()
-df_4101_2 = df_4101_2.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[['Kuantitas']].sum().reset_index()
-df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns='Tipe Penyesuaian',values='Kuantitas').reset_index().fillna('')
+df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[[f'{qty_nom}']].sum().reset_index()
+df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns='Tipe Penyesuaian',values=f'{qty_nom}').reset_index().fillna('')
+
+st.dataframe(df_4101_1, use_container_width=True, hide_index=True)
 st.dataframe(df_4101_2, use_container_width=True, hide_index=True)
