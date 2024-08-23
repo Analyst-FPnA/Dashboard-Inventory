@@ -88,4 +88,4 @@ if 'All' not in ia:
     df_4101_2 = df_4101_2[df_4101_2['Nomor #'].isin(ia)]
 
 st.dataframe(df_4101_2, use_container_width=True, hide_index=True)
-st.write(df_4101_2.style.set_table_styles([{'selector': 'th', 'props': [('font-size', '12pt')]}]))
+st.write(df_4101_2.style.render(), unsafe_allow_html=True)
