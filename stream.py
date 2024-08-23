@@ -85,6 +85,6 @@ df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama B
 st.dataframe(df_4101_1, use_container_width=True, hide_index=True)
 ia = st.multiselect("NOMOR IA:", ['All'] + sorted(df_4101_2['Nomor #'].unique().tolist()), default=['All'], on_change=reset_button_state)
 if 'All' not in ia:
-    df_4101_2 = df_4101_2[df_4101_2['Nomor #']==ia]
+    df_4101_2 = df_4101_2[df_4101_2['Nomor #'].isin(ia)]
 
 st.dataframe(df_4101_2, use_container_width=True, hide_index=True)
