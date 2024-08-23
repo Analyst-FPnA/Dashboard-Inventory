@@ -54,7 +54,7 @@ col = st.columns(3)
 with col[0]:
     gudang = st.selectbox("NAMA GUDANG:", ['All'] + sorted(df_4101['Nama Gudang'].unique().tolist()), index=0, on_change=reset_button_state)
 with col[1]:
-    tipe = st.selectbox("PENAMBAHAN/PENGURANGAN:", ['All','Penambahan','Pengurangan'], index=0, on_change=reset_button_state)
+    tipe = st.selectbox("PENAMBAHAN/PENGURANGAN:", ['Penambahan','Pengurangan'], index=0, on_change=reset_button_state)
 with col[2]:
     qty_nom = st.selectbox("KUANTITAS/TOTAL BIAYA:", ['Kuantitas','Total Biaya'], index=0, on_change=reset_button_state)
 
@@ -69,11 +69,7 @@ if gudang != 'All':
     df_4101 = df_4101[(df_4101['Nama Gudang']== gudang) & (df_4101['Kategori'].isin(['00.COST', '21.COST.ASSET', '20.ASSET.ASSET']))]
 df_4101['Tanggal'] = pd.to_datetime(df_4101['Tanggal'], format="%d/%m/%Y")
 df_4101['Month'] = df_4101['Tanggal'].dt.month_name()
-
-if tipe != 'All':
-    df_4101_1 = df_4101[df_4101['Tipe Penyesuaian']== tipe]
-if tipe == 'All':
-    df_4101_1 = df_4101
+df_4101_1 = df_4101[df_4101['Tipe Penyesuaian']== tipe]
 df_4101_1= df_4101_1.groupby(['Month','Nama Barang'])[[f'{qty_nom}']].sum().reset_index()
 
 df_4101_1['Month'] = pd.Categorical(df_4101_1['Month'], categories=list_bulan, ordered=True)
