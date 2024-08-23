@@ -63,9 +63,8 @@ list_bulan = [
         'July', 'August', 'September', 'October', 'November', 'December']
 
 
-
-
 df_4101 = df_4101[(df_4101['Nama Cabang']==cabang) & (df_4101['Kategori'].isin(['00.COST', '21.COST.ASSET', '20.ASSET.ASSET']))]
+st.write(df_4101.head())
 df_4101['Tanggal'] = pd.to_datetime(df_4101['Tanggal'], format="%d/%m/%Y")
 df_4101['Month'] = df_4101['Tanggal'].dt.month_name()
 df_4101_1 = df_4101[df_4101['Tipe Penyesuaian']== tipe]
