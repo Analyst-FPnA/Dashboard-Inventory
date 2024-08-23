@@ -78,8 +78,9 @@ df_4101_1['Month'] = pd.Categorical(df_4101_1['Month'], categories=list_bulan, o
 df_4101_1 = df_4101_1.sort_values('Month')
 df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_nom}').reset_index().fillna('')
 
-df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[[f'{qty_nom}']].sum().reset_index()
-df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns='Tipe Penyesuaian',values=f'{qty_nom}').reset_index().fillna('')
+df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[['Kuantitas','Total Biaya']].sum().reset_index()
+df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns=['Tipe Penyesuaian'],values=['Kuantitas','Total Biaya']).reset_index().fillna('')
+
 ia = st.multiselect("NOMOR IA:", ['All'] + sorted(df_4101_2['Nomor #'].unique().tolist()), default=['All'], on_change=reset_button_state)
 if 'All' not in ia:
     df_4101_2 = df_4101_2[df_4101_2['Nomor #']==ia]
