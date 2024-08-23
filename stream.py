@@ -68,7 +68,7 @@ df_4101['Tanggal'] = pd.to_datetime(df_4101['Tanggal'], format="%d/%m/%Y")
 df_4101['Month'] = df_4101['Tanggal'].dt.month_name()
 month = df_4101['Month'].unique().tolist()
 
-df_4101 = df_4101[(df_4101['Nama Cabang']== gudang) & (df_4101['Tipe Penyesuaian']== tipe)]
+df_4101 = df_4101[(df_4101['Nama Cabang']== cabang) & (df_4101['Tipe Penyesuaian']== tipe)]
 df_4101_1 = df_4101.groupby(['Month','Nama Barang'])[[f'{qty_nom}']].sum().reset_index()
 
 df_4101_1['Month'] = pd.Categorical(df_4101_1['Month'], categories=list_bulan, ordered=True)
@@ -84,7 +84,7 @@ for i in month:
 df_ia = pd.concat(all_month,axis=1, ignore_index=True)
 for i, x in enumerate(month):
     df_ia = df_ia.rename(columns={i:x})
-df_ia['Nama Cabang'] = gudang
+df_ia['Nama Cabang'] = cabang
 df_ia = df_ia[[df_ia.columns[-1]]+list(df_ia.columns[:-1])].fillna('')
 st.dataframe(df_ia, use_container_width=True)
 
