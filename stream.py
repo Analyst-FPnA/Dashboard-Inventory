@@ -9,6 +9,7 @@ import gdown
 import tempfile
 import matplotlib.pyplot as plt
 import seaborn as sns
+pd.options.display.float_format = '{:,.0f}'.format
 
 import plotly.express as px
 import plotly.graph_objs as go
