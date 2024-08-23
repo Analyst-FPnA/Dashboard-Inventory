@@ -87,5 +87,5 @@ st.dataframe(df_4101_1, use_container_width=True, hide_index=True)
 #if 'All' not in ia:
 #    df_4101_2 = df_4101_2[df_4101_2['Nomor #'].isin(ia)]
 #df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
-st.dataframe(df_4101_2, use_container_width=True, hide_index=True)
+st.dataframe(df_4101_2, use_container_width=True)
 st.table(df_4101_2)
