@@ -107,7 +107,7 @@ df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang'
 df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns=['Tipe Penyesuaian'],values=['Kuantitas','Total Biaya']).reset_index().fillna(0)
 st.dataframe(pd.concat([df_4101_1,total])[:-1], use_container_width=True, hide_index=True)
 st.dataframe(pd.concat([df_4101_1,total])[-1:], use_container_width=True, hide_index=True)
-total_filled = total.copy()
+total_filled = pd.concat([df_4101_1,total])[-1:]
 for col in df_4101_1.columns:
     if col not in total.columns:
         total_filled[col] = ''
