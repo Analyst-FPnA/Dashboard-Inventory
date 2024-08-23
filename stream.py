@@ -98,9 +98,10 @@ df_4101_1['Month'] = pd.Categorical(df_4101_1['Month'], categories=list_bulan, o
 df_4101_1 = df_4101_1.sort_values('Month')
 df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_nom}').reset_index().fillna(0)
 #df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].applymap(lambda x: '' if x=='' else f'{x:.0f}')
+df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].astype(int)
 total = pd.DataFrame((df_4101_1.iloc[:,1:].sum(axis=0).values).reshape(1,len(df_4101_1.columns)-1),columns=df_4101_1.columns[1:])
 total['Nama Barang']='TOTAL'
-df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].astype(int)
+
 pd.options.display.float_format = '{:,.0f}'.format
 df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[['Kuantitas','Total Biaya']].sum().reset_index()
 df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns=['Tipe Penyesuaian'],values=['Kuantitas','Total Biaya']).reset_index().fillna(0)
@@ -120,9 +121,10 @@ list_ia = sorted(df_4101_2['Nomor #'].unique().tolist())
 ia = st.selectbox("NOMOR IA:",list_ia ,index=len(list_ia)-1, on_change=reset_button_state)
 df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia].drop(columns='Nomor #')
 df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
-df_4101_2.iloc[:,4:] = df_4101_2.iloc[:,4:].astype(float)
+
+df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].astype(int)
 total = pd.DataFrame((df_4101_2.iloc[:,3:].sum(axis=0).values).reshape(1,len(df_4101_2.columns)-3),columns=df_4101_2.columns[3:])
 total['Nama Barang_']='TOTAL'
-df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].astype(int)
+
 #df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].applymap(lambda x: '' if x=='' else f'{x:,.0f}')
 st.dataframe(pd.concat([df_4101_2,total]).fillna(''), use_container_width=True, hide_index=True)
