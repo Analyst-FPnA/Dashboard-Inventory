@@ -121,5 +121,8 @@ list_ia = sorted(df_4101_2['Nomor #'].unique().tolist())
 ia = st.selectbox("NOMOR IA:",list_ia ,index=len(list_ia)-1, on_change=reset_button_state)
 df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia].drop(columns='Nomor #')
 df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
-df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].applymap(lambda x: '' if x=='' else f'{x:,.0f}')
-st.dataframe(df_4101_2, use_container_width=True, hide_index=True)
+total = pd.DataFrame((df_4101_2.iloc[:,4:].sum(axis=0).values).reshape(1,len(df_4101_2.columns)-4),columns=df_4101_2.columns[4:])
+total['Nama Barang_']='TOTAL'
+
+#df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].applymap(lambda x: '' if x=='' else f'{x:,.0f}')
+st.dataframe(pd.concat([df_4101_2,total]).fillna(''), use_container_width=True, hide_index=True)
