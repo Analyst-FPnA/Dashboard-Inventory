@@ -52,7 +52,7 @@ if not os.path.exists('full_4401.csv'):
                     
                     df_4101a['Tanggal'] = df_4101a['Tanggal'].dt.strftime('%d/%m/%Y')
                     concatenated_df.append(df_4101a) 
-        pd.concat(concatenated_df, ignore_index=True).to_csv('full_4401.csv',ignore_index=True)
+        pd.concat(concatenated_df, ignore_index=True).to_csv('full_4401.csv',index=False)
 
 if 'df_4401' not in locals():
     df_4401 = pd.read_csv('full_4401.csv')
