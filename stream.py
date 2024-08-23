@@ -32,7 +32,7 @@ dest_path = f'downloaded_file.zip'
 download_file_from_google_drive(file_id, dest_path)
 
 
-if 'df_4101' not in locals():
+if 'df_4101.csv' not in os.listdir():
     with zipfile.ZipFile(f'downloaded_file.zip', 'r') as z:
         concatenated_df= []
         for file_name in z.namelist():
@@ -42,8 +42,10 @@ if 'df_4101' not in locals():
                     # Membaca file Excel ke dalam DataFrame
                     df =   pd.read_excel(f)
                     concatenated_df.append(df) 
-        df_4101 = pd.concat(concatenated_df, ignore_index=True)
+        pd.concat(concatenated_df, ignore_index=True).to_csv('df_4101.csv',index=False)
 
+if 'df_4101' not in locals():
+    df_4101 = pd.read_csv('df_4101.csv')
     
 st.title('Dashboard - Inventaris')  
 
