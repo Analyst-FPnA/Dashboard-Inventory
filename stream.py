@@ -89,7 +89,7 @@ df_ia = df_ia[[df_ia.columns[-1]]+list(df_ia.columns[:-1])].fillna('')
 st.dataframe(df_ia, use_container_width=True, hide_index=True)
 
 list_ia = sorted(df_4101_2['Nomor #'].unique().tolist())
-ia = st.selectbox("NOMOR IA:",list_ia ,index=0, on_change=reset_button_state)
+ia = st.selectbox("NOMOR IA:",list_ia ,index=len(list_ia)-1, on_change=reset_button_state)
 df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia].drop(columns='Nomor #')
 df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
 st.dataframe(df_4101_2, use_container_width=True, hide_index=True)
