@@ -85,6 +85,6 @@ df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama B
 st.dataframe(df_4101_1, use_container_width=True, hide_index=True)
 list_ia = sorted(df_4101_2['Nomor #'].unique().tolist())
 ia = st.selectbox("NOMOR IA:",list_ia ,index=0, on_change=reset_button_state)
-df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia]
+df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia].drop(columns='Nomor #')
 df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
 st.dataframe(df_4101_2, use_container_width=True)
