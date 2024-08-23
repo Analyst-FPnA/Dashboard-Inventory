@@ -68,7 +68,7 @@ df_4101_1 = df_4101_1.groupby(['Month','Nama Barang'])[['Kuantitas']].sum().rese
 df_4101_1['Month'] = pd.Categorical(df_4101_1['Month'], categories=list_bulan, ordered=True)
 df_4101_1 = df_4101_1.sort_values('Month')
 df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values='Kuantitas').reset_index().fillna('')
-st.dataframe(df_4401_1, use_container_width=True, hide_index=True)
+st.dataframe(df_4101_1, use_container_width=True, hide_index=True)
 
 df_4101_2 = df_4401[~df_4401['Kode Barang'].astype(str).str.startswith('1')]
 df_4101_2['Tanggal'] = pd.to_datetime(df_4101_2['Tanggal'], format="%d/%m/%Y")
