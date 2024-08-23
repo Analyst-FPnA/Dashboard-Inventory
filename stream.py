@@ -80,7 +80,7 @@ list_bulan = [
         'July', 'August', 'September', 'October', 'November', 'December']
 
 
-df_4101 = df_4401[~df_4401['Kode Barang'].str.startswith('1')]
+df_4101 = df_4401[~df_4401['Kode Barang'].astype(str).str.startswith('1')]
 
 if gudang != 'All':
     df_4101 = df_4101[df_4101['Nama Gudang']== gudang]
