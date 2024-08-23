@@ -82,9 +82,9 @@ df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_n
 
 df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[['Kuantitas','Total Biaya']].sum().reset_index()
 df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns=['Tipe Penyesuaian'],values=['Kuantitas','Total Biaya']).reset_index().fillna('')
-
+st.dataframe(df_4101_1, use_container_width=True, hide_index=True)
 ia = st.multiselect("NOMOR IA:", ['All'] + sorted(df_4101_2['Nomor #'].unique().tolist()), default=['All'], on_change=reset_button_state)
 if 'All' not in ia:
     df_4101_2 = df_4101_2[df_4101_2['Nomor #']==ia]
-st.dataframe(df_4101_1, use_container_width=True, hide_index=True)
+
 st.dataframe(df_4101_2, use_container_width=True, hide_index=True)
