@@ -92,7 +92,7 @@ df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].applymap(lambda x: '' if x=='' else 
 
 df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[['Kuantitas','Total Biaya']].sum().reset_index()
 df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns=['Tipe Penyesuaian'],values=['Kuantitas','Total Biaya']).reset_index().fillna('')
-st.dataframe(df_4101_1.style.apply(highlight_header, axis=1, subset=df_4101_1.columns), use_container_width=True, hide_index=True)
+st.dataframe(df_4101_1, use_container_width=True, hide_index=True)
 all_month = []
 for i in month:
     all_month.append(pd.DataFrame(df_4101[df_4101['Month']==f'{i}']['Nomor #'].unique(),columns=[f'{i}']))
@@ -101,11 +101,11 @@ for i, x in enumerate(month):
     df_ia = df_ia.rename(columns={i:x})
 df_ia['Nama Cabang'] = cabang
 df_ia = df_ia[[df_ia.columns[-1]]+list(df_ia.columns[:-1])].fillna('')
-st.dataframe(df_ia.style.apply(highlight_header, axis=1, subset=df_ia.columns), use_container_width=True, hide_index=True)
+st.dataframe(df_ia, use_container_width=True, hide_index=True)
 
 list_ia = sorted(df_4101_2['Nomor #'].unique().tolist())
 ia = st.selectbox("NOMOR IA:",list_ia ,index=len(list_ia)-1, on_change=reset_button_state)
 df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia].drop(columns='Nomor #')
 df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
 df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].applymap(lambda x: '' if x=='' else f'{x:,.0f}')
-st.dataframe(df_4101_2.style.apply(highlight_header, axis=1, subset=df_4101_2.columns), use_container_width=True, hide_index=True)
+st.dataframe(df_4101_2, use_container_width=True, hide_index=True)
