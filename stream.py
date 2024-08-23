@@ -54,7 +54,7 @@ col = st.columns(3)
 with col[0]:
     cabang = st.selectbox("NAMA CABANG:", sorted(df_4101['Nama Cabang'].unique().tolist()), index=0, on_change=reset_button_state)
 with col[1]:
-    tipe = st.selectbox("PENAMBAHAN/PENGURANGAN:", ['Penambahan','Pengurangan'], index=0, on_change=reset_button_state)
+    tipe = st.selectbox("PENAMBAHAN/PENGURANGAN:", ['Penambahan','Pengurangan'], index=1, on_change=reset_button_state)
 with col[2]:
     qty_nom = st.selectbox("KUANTITAS/TOTAL BIAYA:", ['Kuantitas','Total Biaya'], index=0, on_change=reset_button_state)
 
@@ -86,10 +86,10 @@ for i, x in enumerate(month):
     df_ia = df_ia.rename(columns={i:x})
 df_ia['Nama Cabang'] = cabang
 df_ia = df_ia[[df_ia.columns[-1]]+list(df_ia.columns[:-1])].fillna('')
-st.dataframe(df_ia, use_container_width=True, ignore_index=True)
+st.dataframe(df_ia, use_container_width=True, hide_index=True)
 
 list_ia = sorted(df_4101_2['Nomor #'].unique().tolist())
 ia = st.selectbox("NOMOR IA:",list_ia ,index=0, on_change=reset_button_state)
 df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia].drop(columns='Nomor #')
 df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
-st.dataframe(df_4101_2, use_container_width=True, ignore_index=True)
+st.dataframe(df_4101_2, use_container_width=True, hide_index=True)
