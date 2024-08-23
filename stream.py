@@ -101,7 +101,6 @@ df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_n
 total = pd.DataFrame((df_4101_1.iloc[:,1:].sum(axis=0).values).reshape(1,len(df_4101_1.columns)-1),columns=df_4101_1.columns[1:])
 total['Nama Barang']='TOTAL'
 
-
 pd.options.display.float_format = '{:,.0f}'.format
 df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[['Kuantitas','Total Biaya']].sum().reset_index()
 df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns=['Tipe Penyesuaian'],values=['Kuantitas','Total Biaya']).reset_index().fillna(0)
@@ -122,7 +121,7 @@ ia = st.selectbox("NOMOR IA:",list_ia ,index=len(list_ia)-1, on_change=reset_but
 df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia].drop(columns='Nomor #')
 df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
 df_4101_2.iloc[:,4:] = df_4101_2.iloc[:,4:].astype(float)
-total = pd.DataFrame((df_4101_2.iloc[:,4:].sum(axis=0).values).reshape(1,len(df_4101_2.columns)-4),columns=df_4101_2.columns[4:])
+total = pd.DataFrame((df_4101_2.iloc[:,3:].sum(axis=0).values).reshape(1,len(df_4101_2.columns)-3),columns=df_4101_2.columns[3:])
 total['Nama Barang_']='TOTAL'
 
 #df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].applymap(lambda x: '' if x=='' else f'{x:,.0f}')
