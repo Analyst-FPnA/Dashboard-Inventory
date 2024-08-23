@@ -27,12 +27,12 @@ def download_file_from_google_drive(file_id, dest_path):
         gdown.download(url, dest_path, quiet=False)
 
         
-file_id = '1gm-_ZJ1Uitq2-f5-ETuO2PAXkOzzfjZM'
+file_id = '1KCY_Rr97Y1yaf-4LOE1NsZQQ2DdDBfIR'
 dest_path = f'downloaded_file.zip'
 download_file_from_google_drive(file_id, dest_path)
 
 
-if not os.path.exists('full_4401.csv'):
+if 'df_4101' not in locals():
     with zipfile.ZipFile(f'downloaded_file.zip', 'r') as z:
         concatenated_df= []
         for file_name in z.namelist():
@@ -40,37 +40,17 @@ if not os.path.exists('full_4401.csv'):
                 print(file_name)
                 with z.open(file_name) as f:
                     # Membaca file Excel ke dalam DataFrame
-                    df_4101 =   pd.read_excel(f, header=4)
-                    df_4101['Nama Cabang'] = df_4101['Nama Cabang'].astype(str)
-                    
-                    data_remove = ["Nama Cabang", "GiS", "#41.01", "Dari", "Cabang"]
-                    df_4101a = df_4101[~df_4101['Nama Cabang'].str.startswith(tuple(data_remove))]
-                    
-                    df_4101a['Nama Cabang'] = df_4101a['Nama Cabang'].replace('nan', "")
-                    
-                    df_4101a['Keterangan'] = df_4101a['Keterangan'].fillna("").astype(str)
-                    
-                    df_4101a['Keterangan'] = df_4101a.groupby((df_4101a['Nomor #'].notna()).cumsum())['Keterangan'].transform(lambda x: ' '.join(x))
-                    
-                    df_4101a = df_4101a.loc[:, ~df_4101.columns.str.startswith('Unnamed')]
-                    
-                    df_4101a = df_4101a[df_4101a['Nama Cabang'] != ""]
-                    
-                    df_4101a['Tanggal'] = pd.to_datetime(df_4101a['Tanggal'], format='%d/%m/%Y %H:%M:%S')
-                    
-                    df_4101a['Tanggal'] = df_4101a['Tanggal'].dt.strftime('%d/%m/%Y')
-                    concatenated_df.append(df_4101a) 
-        pd.concat(concatenated_df, ignore_index=True).to_csv('full_4401.csv',index=False)
+                    df =   pd.read_excel(f)
+                    concatenated_df.append(df) 
+        df_4101 = pd.concat(concatenated_df, ignore_index=True)
 
-if 'df_4401' not in locals():
-    df_4401 = pd.read_csv('full_4401.csv')
     
 st.title('Dashboard - Inventaris')  
 
-df_4101_1 = df_4401[~df_4401['Kode Barang'].astype(str).str.startswith('1')]
+df_4101 = df_4101[~df_4101['Kode Barang'].astype(str).str.startswith('1')]
 col = st.columns(3)
 with col[0]:
-    gudang = st.selectbox("NAMA GUDANG:", ['All'] + sorted(df_4401['Nama Gudang'].unique().tolist()), index=0, on_change=reset_button_state)
+    gudang = st.selectbox("NAMA GUDANG:", ['All'] + sorted(df_4101['Nama Gudang'].unique().tolist()), index=0, on_change=reset_button_state)
 with col[1]:
     tipe = st.selectbox("PENAMBAHAN/PENGURANGAN:", ['All','Penambahan','Pengurangan'], index=0, on_change=reset_button_state)
 with col[2]:
@@ -81,7 +61,7 @@ list_bulan = [
         'July', 'August', 'September', 'October', 'November', 'December']
 
 
-df_4101 = df_4401[~df_4401['Kode Barang'].astype(str).str.startswith('1')]
+
 
 if gudang != 'All':
     df_4101 = df_4101[df_4101['Nama Gudang']== gudang]
