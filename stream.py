@@ -123,7 +123,6 @@ df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia].drop(columns='Nomor #')
 df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
 df_4101_2.iloc[:,4:] = df_4101_2.iloc[:,4:].astype(float)
 total = pd.DataFrame((df_4101_2.iloc[:,4:].sum(axis=0).values).reshape(1,len(df_4101_2.columns)-4),columns=df_4101_2.columns[4:])
-st.write(total)
 total['Nama Barang_']='TOTAL'
 
 #df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].applymap(lambda x: '' if x=='' else f'{x:,.0f}')
