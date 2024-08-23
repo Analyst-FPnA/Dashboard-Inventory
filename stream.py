@@ -13,6 +13,13 @@ import seaborn as sns
 import plotly.express as px
 import plotly.graph_objs as go
 
+if 'button_clicked' not in st.session_state:
+    st.session_state.button_clicked = False
+
+# Fungsi untuk mereset state button
+def reset_button_state():
+    st.session_state.button_clicked = False
+
 def download_file_from_google_drive(file_id, dest_path):
     if not os.path.exists(dest_path):
         url = f"https://drive.google.com/uc?id={file_id}"
