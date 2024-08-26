@@ -129,7 +129,8 @@ df_4101_2.columns = ['_'.join(col).strip() for col in df_4101_2.columns.values]
 
 df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].astype(int)
 total = pd.DataFrame((df_4101_2.iloc[:,3:].sum(axis=0).values).reshape(1,len(df_4101_2.columns)-3),columns=df_4101_2.columns[3:])
-total['Nama Barang_']='TOTAL'
+total['Nama Barang_']='TOTAL'+(df_4101_2['Nama Barang_'].str.len().max()+8)*' '
 
 #df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].applymap(lambda x: '' if x=='' else f'{x:,.0f}')
-st.dataframe(pd.concat([df_4101_2,total]).fillna(''), use_container_width=True, hide_index=True)
+st.dataframe(pd.concat([df_4101_2,total])[:-1].fillna(''), use_container_width=True, hide_index=True)
+st.dataframe(pd.concat([df_4101_2,total])[-1:].fillna(''), use_container_width=True, hide_index=True)
