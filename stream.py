@@ -110,7 +110,7 @@ def highlight_header(s):
     return ['background-color: red; color: white;' for _ in s]
 
 # Mengaplikasikan style ke DataFrame
-st.dataframe(pd.concat([df_4101_1,total])[:-1].style.apply(highlight_header, axis=0), use_container_width=True, hide_index=True)
+st.dataframe(pd.concat([df_4101_1,total])[:-1], use_container_width=True, hide_index=True)
 st.dataframe(pd.concat([df_4101_1,total])[-1:], use_container_width=True, hide_index=True)
 
 
