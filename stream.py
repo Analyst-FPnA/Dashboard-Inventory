@@ -105,6 +105,7 @@ total['Nama Barang']='TOTAL'+(df_4101_1['Nama Barang'].str.len().max()+8)*' '
 pd.options.display.float_format = '{:,.0f}'.format
 df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[['Kuantitas','Total Biaya']].sum().reset_index()
 df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns=['Tipe Penyesuaian'],values=['Kuantitas','Total Biaya']).reset_index().fillna(0)
+
 st.dataframe(pd.concat([df_4101_1,total])[:-1], use_container_width=True, hide_index=True)
 st.dataframe(pd.concat([df_4101_1,total])[-1:], use_container_width=True, hide_index=True)
 
@@ -117,8 +118,10 @@ for i, x in enumerate(month):
     df_ia = df_ia.rename(columns={i:x})
 df_ia['Nama Cabang'] = cabang
 df_ia = df_ia[[df_ia.columns[-1]]+list(df_ia.columns[:-1])].fillna('')
+st.markdown('###Daftar Nomor IA')
 st.dataframe(df_ia, use_container_width=True, hide_index=True)
 
+st.markdown('###Detail Nomor IA')
 list_ia = sorted(df_4101_2['Nomor #'].unique().tolist())
 ia = st.selectbox("NOMOR IA:",list_ia ,index=len(list_ia)-1, on_change=reset_button_state)
 df_4101_2 = df_4101_2[df_4101_2['Nomor #'] == ia].drop(columns='Nomor #')
