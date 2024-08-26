@@ -106,7 +106,11 @@ pd.options.display.float_format = '{:,.0f}'.format
 df_4101_2 = df_4101.groupby(['Nama Cabang','Nomor #','Kode Barang','Nama Barang','Tipe Penyesuaian'])[['Kuantitas','Total Biaya']].sum().reset_index()
 df_4101_2 = df_4101_2.pivot(index=['Nama Cabang','Nomor #','Kode Barang','Nama Barang'],columns=['Tipe Penyesuaian'],values=['Kuantitas','Total Biaya']).reset_index().fillna(0)
 
-st.dataframe(pd.concat([df_4101_1,total])[:-1], use_container_width=True, hide_index=True)
+def highlight_header(s):
+    return ['background-color: red; color: white;' for _ in s]
+
+# Mengaplikasikan style ke DataFrame
+st.dataframe(pd.concat([df_4101_1,total])[:-1].style.apply(highlight_header, axis=0), use_container_width=True, hide_index=True)
 st.dataframe(pd.concat([df_4101_1,total])[-1:], use_container_width=True, hide_index=True)
 
 
