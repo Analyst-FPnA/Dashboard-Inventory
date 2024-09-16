@@ -137,5 +137,5 @@ total['Nama Barang_']='TOTAL'+(df_4101_2['Nama Barang_'].str.len().max()+8)*' '
 df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].astype(int)
 
 #df_4101_2.iloc[:,3:] = df_4101_2.iloc[:,3:].applymap(lambda x: '' if x=='' else f'{x:,.0f}')
-st.dataframe(df_4101_2.fillna(''), use_container_width=True, hide_index=True)
-st.dataframe(total.fillna(''), use_container_width=True, hide_index=True)
+st.dataframe(pd.concat([df_4101_2,total])[:-1].fillna(''), use_container_width=True, hide_index=True)
+st.dataframe(pd.concat([df_4101_2,total])[-1:].fillna(''), use_container_width=True, hide_index=True)
