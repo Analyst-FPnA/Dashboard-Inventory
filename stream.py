@@ -91,6 +91,7 @@ df_4101 = df_4101[(df_4101['Nama Cabang']==cabang) & (df_4101['Kategori'].isin([
 
 df_4101['Tanggal'] = pd.to_datetime(df_4101['Tanggal'], format="%d/%m/%Y")
 df_4101['Month'] = df_4101['Tanggal'].dt.month_name()
+df_4101['Month'] = pd.Categorical(df_4101['Month'], categories=list_bulan, ordered=True)
 st.write(df_4101['Month'].max())
 month = list_bulan[:list_bulan.index(df_4101['Month'].max())+1]
 
