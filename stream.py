@@ -102,7 +102,7 @@ df_4101_1 = df_4101.groupby(['Month','Nama Barang'])[[f'{qty_nom}']].sum().reset
 
 df_4101_1['Month'] = pd.Categorical(df_4101_1['Month'], categories=list_bulan, ordered=True)
 df_4101_1 = df_4101_1.sort_values('Month')
-month = list_bulan[:list_bulan.index(df_4101_1['Month'].max())+1]
+month = df_4101_1['Month'].unique().tolist()
 df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_nom}').reset_index().fillna(0)
 #df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].applymap(lambda x: '' if x=='' else f'{x:.0f}')
 df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].astype(int)
