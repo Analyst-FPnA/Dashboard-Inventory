@@ -1,3 +1,4 @@
+
 import streamlit as st
 import requests
 import zipfile
@@ -120,11 +121,9 @@ st.dataframe(pd.concat([df_4101_1,total])[-1:], use_container_width=True, hide_i
 
 
 all_month = []
-st.write(month)
 for i in month:
     all_month.append(pd.DataFrame(df_4101[df_4101['Month']==f'{i}']['Nomor #'].unique(),columns=[f'{i}']))
 df_ia = pd.concat(all_month,axis=1, ignore_index=True)
-st.write(df_ia)
 for i, x in enumerate(month):
     df_ia = df_ia.rename(columns={i:x})
 df_ia['Nama Cabang'] = cabang
