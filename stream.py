@@ -65,6 +65,7 @@ if 'df_4101.csv' not in os.listdir():
                 with z.open(file_name) as f:
                     # Membaca file Excel ke dalam DataFrame
                     df =   pd.read_excel(f)
+                    st.write(df.head())
                     concatenated_df.append(df) 
         pd.concat(concatenated_df, ignore_index=True).to_csv('df_4101.csv',index=False)
         
@@ -74,7 +75,7 @@ if 'df_4101' not in locals():
     
 st.title('Inventaris Control')  
 
-st.write(df_4101.sort_values('Tanggal'))
+#st.write(df_4101.sort_values('Tanggal'))
 df_4101 = df_4101[~df_4101['Kode Barang'].astype(str).str.startswith('1')]
 col = st.columns(3)
 with col[0]:
