@@ -74,6 +74,7 @@ if 'df_4101' not in locals():
     
 st.title('Inventaris Control')  
 
+st.write(df_4101.sort_values('Tanggal'))
 df_4101 = df_4101[~df_4101['Kode Barang'].astype(str).str.startswith('1')]
 col = st.columns(3)
 with col[0]:
