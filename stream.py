@@ -59,8 +59,8 @@ if 'df_4101.csv' not in os.listdir():
     with zipfile.ZipFile(f'downloaded_file.zip', 'r') as z:
         concatenated_df= []
         for file_name in z.namelist():
-            if file_name.endswith('.xlsx') or file_name.endswith('.xls'):  # Memastikan hanya file Excel yang dibaca
-                print(file_name)
+            #if file_name.endswith('.xlsx') or file_name.endswith('.xls'):  # Memastikan hanya file Excel yang dibaca
+                st.write(file_name)
                 with z.open(file_name) as f:
                     # Membaca file Excel ke dalam DataFrame
                     df =   pd.read_excel(f)
