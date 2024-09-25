@@ -66,7 +66,12 @@ if 'df_4101.csv' not in os.listdir():
                     df =   pd.read_excel(f)
                     concatenated_df.append(df) 
         pd.concat(concatenated_df, ignore_index=True).to_csv('df_4101.csv',index=False)
-
+        
+with zipfile.ZipFile(f'downloaded_file.zip', 'r') as z:
+        concatenated_df= []
+        for file_name in z.namelist():
+            st.write(file_name)
+        
 if 'df_4101' not in locals():
     df_4101 = pd.read_csv('df_4101.csv')
     
@@ -90,7 +95,7 @@ df_4101 = df_4101[(df_4101['Nama Cabang']==cabang) & (df_4101['Kategori'].isin([
 df_4101['Tanggal'] = pd.to_datetime(df_4101['Tanggal'], format="%d/%m/%Y")
 df_4101['Month'] = df_4101['Tanggal'].dt.month_name()
 month = df_4101['Month'].unique().tolist()
-st.write(month)
+
 
 df_4101 = df_4101[(df_4101['Nama Cabang']== cabang) & (df_4101['Tipe Penyesuaian']== tipe)]
 df_4101_1 = df_4101.groupby(['Month','Nama Barang'])[[f'{qty_nom}']].sum().reset_index()
