@@ -92,9 +92,9 @@ df_4101 = df_4101[(df_4101['Nama Cabang']==cabang) & (df_4101['Kategori'].isin([
 
 df_4101['Tanggal'] = pd.to_datetime(df_4101['Tanggal'], format="%d/%m/%Y")
 df_4101['Month'] = df_4101['Tanggal'].dt.month_name()
-df_4101['Month'] = pd.Categorical(df_4101['Month'], categories=list_bulan, ordered=True)
-st.write(df_4101['Month'].max())
-month = list_bulan[:list_bulan.index(df_4101['Month'].max())+1]
+#df_4101['Month'] = pd.Categorical(df_4101['Month'], categories=list_bulan, ordered=True)
+
+#month = list_bulan[:list_bulan.index(df_4101['Month'].max())+1]
 
 
 df_4101 = df_4101[(df_4101['Nama Cabang']== cabang) & (df_4101['Tipe Penyesuaian']== tipe)]
@@ -102,6 +102,7 @@ df_4101_1 = df_4101.groupby(['Month','Nama Barang'])[[f'{qty_nom}']].sum().reset
 
 df_4101_1['Month'] = pd.Categorical(df_4101_1['Month'], categories=list_bulan, ordered=True)
 df_4101_1 = df_4101_1.sort_values('Month')
+month = list_bulan[:list_bulan.index(df_4101_1['Month'].max())+1]
 df_4101_1 = df_4101_1.pivot(index='Nama Barang', columns='Month',values=f'{qty_nom}').reset_index().fillna(0)
 #df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].applymap(lambda x: '' if x=='' else f'{x:.0f}')
 df_4101_1.iloc[:,1:] = df_4101_1.iloc[:,1:].astype(int)
