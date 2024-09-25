@@ -119,7 +119,7 @@ st.dataframe(pd.concat([df_4101_1,total])[-1:], use_container_width=True, hide_i
 
 all_month = []
 for i in list_bulan:
-    if ~pd.DataFrame(df_4101[df_4101['Month']==f'{i}'].empty:
+    if ~df_4101[df_4101['Month']==f'{i}'].empty:
         all_month.append(pd.DataFrame(df_4101[df_4101['Month']==f'{i}']['Nomor #'].unique(),columns=[f'{i}']))
 df_ia = pd.concat(all_month,axis=1, ignore_index=True)
 for i, x in enumerate(month):
